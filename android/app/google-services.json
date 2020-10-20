@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "592273175125",
+    "firebase_url": "https://guffgaff-60a30.firebaseio.com",
+    "project_id": "guffgaff-60a30",
+    "storage_bucket": "guffgaff-60a30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592273175125:android:0ade716b8861514709dadc",
+        "android_client_info": {
+          "package_name": "com.example.helloworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592273175125-uqvo8hscjokt7fu4lpd3a5mel37qovo4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMWME02aaYi6YWxQU4vD7qc5NSwdEJLY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592273175125-uqvo8hscjokt7fu4lpd3a5mel37qovo4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
