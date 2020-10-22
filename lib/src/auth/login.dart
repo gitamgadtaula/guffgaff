@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
       prefs.setString('token', decodedResponse['token']);
       prefs.setBool('isAuthenticated', true);
       widget.checkAuthStatus();
-      print(decodedResponse['token']);
+      // print(decodedResponse['token']);
     } else {
       setState(() {
         isLoading = false;
