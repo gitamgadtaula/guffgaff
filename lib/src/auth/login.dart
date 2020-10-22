@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
-  final Function toggleAuth;
-  Login({this.toggleAuth});
+  final Function checkAuthStatus;
+  Login({this.checkAuthStatus});
 
   @override
   _LoginState createState() => _LoginState();
@@ -31,6 +31,7 @@ class _LoginState extends State<Login> {
       var decodedResponse = jsonDecode(response.body);
       prefs.setString('token', decodedResponse['token']);
       prefs.setBool('isAuthenticated', true);
+      widget.checkAuthStatus();
       print(decodedResponse['token']);
     } else {
       setState(() {
