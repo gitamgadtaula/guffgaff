@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
-// import 'package:guffgaff/src/auth/login.dart';
-// import 'package:guffgaff/src/auth/register.dart';
+import 'package:guffgaff/src/auth/login.dart';
+import 'package:guffgaff/src/mainPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'auth/auth.dart';
 
-import 'auth/auth.dart';
+class Skeleton extends StatefulWidget {
+   final Function checkAuthStatus;
+  //accepting the function passed via login Class inside of constructor to access those function inside this class
+  Skeleton({this.checkAuthStatus});
+  @override
+  _SkeletonState createState() => _SkeletonState();
+}
 
-class Skeleton extends StatelessWidget {
+class _SkeletonState extends State<Skeleton> {
+  bool isAuthenticated = false;
+  void checkAuthStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isAuthenticated = prefs.getBool('isAuthenticated');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,31 +27,7 @@ class Skeleton extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: Colors.orangeAccent,
         ),
-        home: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-              appBar: AppBar(
-                  // leading: Icon(Icons.message),
-                  centerTitle: true,
-                  title: Text('GuffGaff'),
-                  bottom: TabBar(tabs: [
-                    Tab(
-                      icon: Icon(Icons.home),
-                      child: Text('Home'),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.message),
-                      child: Text('Users'),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.person),
-                      child: Text('Profile'),
-                    )
-                  ])),
-              body: SafeArea(
-                child: TabBarView(children: [Text('1'), Text('2'), Auth()]),
-              )),
-        ));
+        home: isAuthenticated ?  MainPage() : Login(checkAuthStatus:checkAuthStatus);
 
     //  body: MyPage()
   }
