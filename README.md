@@ -1,6 +1,6 @@
 # guffgaff
 
-### A new Flutter chart project with node js and mongodb.
+### A new Flutter chat project with node js and mongodb.
 
 ## Getting Started
 
