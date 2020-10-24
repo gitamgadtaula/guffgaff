@@ -1,6 +1,6 @@
 # guffgaff
 
-A new Flutter project.
+A new Flutter chart project.
 
 ## Getting Started
 

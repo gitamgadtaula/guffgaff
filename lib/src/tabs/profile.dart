@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+// import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -9,19 +10,17 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-fetchToken() async {
+Future fetchToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token');
-  // print(token);
-  if (token != null) {
-    return token;
-  }
+  var token = prefs.getString('token');
+  print('token is $token');
+  return token;
 }
 
 Future fetchProfile(token) async {
   final response = await http
       .get('https://guffgaffchat.herokuapp.com/api/user/me', headers: {
-    'Authorization': 'Bearer $token',
+    'authorization': 'Bearer $token',
   });
   print('Bearer $token');
   if (response.statusCode == 200) {
@@ -35,19 +34,26 @@ Future fetchProfile(token) async {
 class _ProfileState extends State<Profile> {
   var user;
   var token;
+
   @override
   void initState() {
     super.initState();
     token = fetchToken();
     user = fetchProfile(token);
-    print(user);
+    print('token is $token');
+    for (var item in token) {
+      print(item);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Center(
-            child:
-                IconButton(icon: Icon(Icons.drag_handle), onPressed: () {})));
+            child: IconButton(
+                icon: Icon(Icons.drag_handle),
+                onPressed: () {
+                  fetchProfile(token);
+                })));
   }
 }
