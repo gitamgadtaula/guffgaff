@@ -10,50 +10,70 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-Future fetchToken() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  var token = prefs.getString('token');
-  print('token is $token');
-  return token;
-}
-
-Future fetchProfile(token) async {
-  final response = await http
-      .get('https://guffgaffchat.herokuapp.com/api/user/me', headers: {
-    'authorization': 'Bearer $token',
-  });
-  print('Bearer $token');
-  if (response.statusCode == 200) {
-    return jsonDecode(response.body);
-  } else {
-    print(response.statusCode);
-    throw Exception('Failed to load user information');
-  }
-}
-
 class _ProfileState extends State<Profile> {
   var user;
   var token;
 
+  Future fetchToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var fetchedToken = prefs.getString('token');
+    token = fetchedToken;
+  }
+
+  Future fetchProfile() async {
+    final response = await http
+        .get('https://guffgaffchat.herokuapp.com/api/user/me', headers: {
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      var decodedResponse = jsonDecode(response.body);
+      user = decodedResponse;
+      return decodedResponse;
+    } else {
+      print(token);
+      print(response.statusCode);
+      print(response.reasonPhrase);
+      throw Exception('Failed to load user information');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    token = fetchToken();
-    user = fetchProfile(token);
-    print('token is $token');
-    for (var item in token) {
-      print(item);
-    }
+    fetchToken();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Center(
-            child: IconButton(
-                icon: Icon(Icons.drag_handle),
-                onPressed: () {
-                  fetchProfile(token);
+            child: FutureBuilder(
+                future: fetchProfile(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 30,
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    print(snapshot.data);
+                    return Column(children: [
+                      SizedBox(height: 10),
+                      CircleAvatar(
+                        radius: 50,
+                        child: Text(snapshot.data['username'][0],
+                            style: TextStyle(fontSize: 24)),
+                      ),
+                      SizedBox(height: 10),
+                      Text(snapshot.data['username'],
+                          style: TextStyle(fontSize: 18))
+                    ]);
+                  } else {
+                    return CircularProgressIndicator();
+                  }
                 })));
   }
 }
