@@ -11,13 +11,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  var user;
-  var token;
+  // Future user;
+  String token;
 
   Future fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var fetchedToken = prefs.getString('token');
-    token = fetchedToken;
+
+    setState(() {
+      token = fetchedToken;
+    });
+    // token = fetchedToken;
   }
 
   Future fetchProfile() async {
@@ -28,20 +32,21 @@ class _ProfileState extends State<Profile> {
 
     if (response.statusCode == 200) {
       var decodedResponse = jsonDecode(response.body);
-      user = decodedResponse;
       return decodedResponse;
     } else {
-      print(token);
       print(response.statusCode);
+      print(token);
       print(response.reasonPhrase);
+      // return Exception('failed to load user');
       throw Exception('Failed to load user information');
     }
   }
 
-  @override
+  // @override
   void initState() {
     super.initState();
     fetchToken();
+    // user = fetchProfile();
   }
 
   @override
@@ -49,30 +54,32 @@ class _ProfileState extends State<Profile> {
     return Container(
         child: Center(
             child: FutureBuilder(
-                future: fetchProfile(),
+                future: this.fetchProfile(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Icon(
-                      Icons.error_outline,
-                      color: Colors.red,
-                      size: 30,
-                    );
-                  }
-                  if (snapshot.hasData) {
-                    print(snapshot.data);
-                    return Column(children: [
-                      SizedBox(height: 10),
-                      CircleAvatar(
-                        radius: 50,
-                        child: Text(snapshot.data['username'][0],
-                            style: TextStyle(fontSize: 24)),
-                      ),
-                      SizedBox(height: 10),
-                      Text(snapshot.data['username'],
-                          style: TextStyle(fontSize: 18))
-                    ]);
-                  } else {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
+                  } else {
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 30,
+                      );
+                    } else {
+                      print(snapshot.data);
+                      return Column(children: [
+                        SizedBox(height: 10),
+                        CircleAvatar(
+                          radius: 50,
+                          child: Text(snapshot.data['username'][0],
+                              style: TextStyle(fontSize: 24)),
+                        ),
+                        SizedBox(height: 10),
+                        Text(snapshot.data['username'],
+                            style: TextStyle(fontSize: 18))
+                      ]);
+                    }
                   }
                 })));
   }

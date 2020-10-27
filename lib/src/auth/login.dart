@@ -16,6 +16,7 @@ class _LoginState extends State<Login> {
   String email = '';
   String password = '';
   bool isLoading = false;
+  //String token;
   Future login() async {
     setState(() {
       isLoading = true;
@@ -31,6 +32,7 @@ class _LoginState extends State<Login> {
       });
       var decodedResponse = jsonDecode(response.body);
       prefs.setString('token', decodedResponse['token']);
+      // token = decodedResponse['token'];
       prefs.setBool('isAuthenticated', true);
       widget.checkAuthStatus();
       // print(decodedResponse['token']);

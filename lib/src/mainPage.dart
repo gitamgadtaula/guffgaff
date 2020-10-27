@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guffgaff/src/tabs/homePage.dart';
 import 'package:guffgaff/src/tabs/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,7 +46,7 @@ class _MainPageState extends State<MainPage> {
                 )
               ])),
           body: SafeArea(
-            child: TabBarView(children: [Text('1'), Text('2'), Profile()]),
+            child: TabBarView(children: [HomePage(), Text('2'), Profile()]),
           )),
     );
   }
