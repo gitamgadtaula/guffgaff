@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String email = '';
   String password = '';
+  bool isLoginError = false;
   bool isLoading = false;
   //String token;
   Future login() async {
@@ -39,6 +40,7 @@ class _LoginState extends State<Login> {
     } else {
       setState(() {
         isLoading = false;
+        isLoginError = true;
       });
       print(response.statusCode);
       print('api Error');
@@ -50,7 +52,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('login'),
+          title: Text('Login'),
+          centerTitle: true,
+          leading: IconButton(icon: Icon(Icons.person_add), onPressed: () {}),
         ),
         body: SafeArea(
           child: Container(
@@ -101,7 +105,24 @@ class _LoginState extends State<Login> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
+                    isLoginError
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  ' Wrong credentials !!',
+                                  style: TextStyle(color: Colors.red),
+                                )
+                              ])
+                        : SizedBox(
+                            height: 0,
+                          ),
+                    SizedBox(height: 20),
                     FlatButton.icon(
                         color: Colors.black12,
                         focusColor: Colors.deepOrange,
