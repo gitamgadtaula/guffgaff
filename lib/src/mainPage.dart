@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guffgaff/src/tabs/homePage.dart';
 import 'package:guffgaff/src/tabs/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
 
 class MainPage extends StatefulWidget {
   final Function checkAuthStatus;
@@ -25,7 +26,7 @@ class _MainPageState extends State<MainPage> {
           appBar: AppBar(
               // leading: Icon(Icons.message),
               leading: IconButton(
-                  icon: Icon(Icons.exit_to_app),
+                  icon: Icon(Icons.settings_power),
                   onPressed: () {
                     logout();
                   }),
@@ -37,8 +38,8 @@ class _MainPageState extends State<MainPage> {
                   child: Text('Home'),
                 ),
                 Tab(
-                  icon: Icon(Icons.message),
-                  child: Text('Users'),
+                  icon: Icon(CupertinoIcons.mail_solid),
+                  child: Text('Chats'),
                 ),
                 Tab(
                   icon: Icon(Icons.person),
@@ -46,7 +47,11 @@ class _MainPageState extends State<MainPage> {
                 )
               ])),
           body: SafeArea(
-            child: TabBarView(children: [HomePage(), Text('2'), Profile()]),
+            child: TabBarView(children: [
+              HomePage(),
+              Text('Under construction .....'),
+              Profile()
+            ]),
           )),
     );
   }

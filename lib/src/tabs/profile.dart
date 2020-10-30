@@ -77,6 +77,8 @@ class _ProfileState extends State<Profile> {
                         ),
                         SizedBox(height: 10),
                         Text(snapshot.data['username'],
+                            style: TextStyle(fontSize: 18)),
+                        Text(snapshot.data['email'],
                             style: TextStyle(fontSize: 18))
                       ]);
                     }
