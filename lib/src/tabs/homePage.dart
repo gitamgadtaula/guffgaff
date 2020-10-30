@@ -65,26 +65,27 @@ class _HomePageState extends State<HomePage> {
               );
             } else {
               print(snapshot.data);
+              var item = snapshot.data;
               return ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: item.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
                         leading: CircleAvatar(
-                          child: Text(snapshot.data[index]['username'][0]),
+                          backgroundImage: NetworkImage(
+                              'http://guffgaffchat.herokuapp.com/users/${item[index]['avatar']}'),
                           radius: 28,
                         ),
-                        title: Text(snapshot.data[index]['username']),
-                        subtitle: Text(snapshot.data[index]['full_name']),
+                        title: Text(item[index]['username']),
+                        subtitle: Text(item[index]['full_name']),
                         trailing: IconButton(
                             icon: Icon(Icons.navigate_next),
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Chat(
-                                        username: snapshot.data[index]
-                                            ['email'])),
+                                    builder: (context) =>
+                                        Chat(username: item[index]['email'])),
                               );
                             }),
                       ),

@@ -68,13 +68,13 @@ class _ProfileState extends State<Profile> {
                       );
                     } else {
                       print(snapshot.data);
+                      var item = snapshot.data;
                       return Column(children: [
                         SizedBox(height: 10),
                         CircleAvatar(
-                          radius: 50,
-                          child: Text(snapshot.data['username'][0],
-                              style: TextStyle(fontSize: 24)),
-                        ),
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                'http://guffgaffchat.herokuapp.com/users/${item['avatar']}')),
                         SizedBox(height: 10),
                         Text(snapshot.data['username'],
                             style: TextStyle(fontSize: 18)),
