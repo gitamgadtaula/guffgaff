@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guffgaff/src/tabs/homePage.dart';
+import 'package:guffgaff/src/tabs/home.dart';
 import 'package:guffgaff/src/tabs/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
           appBar: AppBar(
               // leading: Icon(Icons.message),
               leading: IconButton(
-                  icon: Icon(Icons.settings_power),
+                  icon: Icon(Icons.exit_to_app),
                   onPressed: () {
                     logout();
                   }),
