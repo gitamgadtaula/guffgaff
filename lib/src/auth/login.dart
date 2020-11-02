@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guffgaff/src/auth/register copy.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
@@ -42,6 +43,7 @@ class _LoginState extends State<Login> {
         isLoading = false;
         isLoginError = true;
       });
+      // print(jsonDecode(response.body['message']));
       print(response.statusCode);
       print('api Error');
     }
@@ -54,7 +56,14 @@ class _LoginState extends State<Login> {
         appBar: AppBar(
           title: Text('Login'),
           centerTitle: true,
-          leading: IconButton(icon: Icon(Icons.person_add), onPressed: () {}),
+          leading: IconButton(
+              icon: Icon(Icons.person_add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Register()),
+                );
+              }),
         ),
         body: SafeArea(
           child: Container(

@@ -115,7 +115,7 @@ class _ChatState extends State<Chat> {
                 itemBuilder: (context, index) {
                   var name =
                       (item[index]['full_name']).split(' ')[0].toUpperCase();
-                  // print(name);
+                  print(index);
                   return ListTile(
                     leading: CircleAvatar(
                         child: widget.userId == item[index]['sender']
@@ -124,10 +124,6 @@ class _ChatState extends State<Chat> {
                     title: Text(item[index]['username']),
                     trailing: Text(item[index]['date'].split("T")[0]),
                     subtitle: Text(item[index]['msg']),
-
-                    // widget.userId == item[index]['sender']
-                    //     ? Text(widget.username)
-                    //     : Text('Me'),
                   );
                 },
               );
