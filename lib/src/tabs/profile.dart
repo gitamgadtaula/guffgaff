@@ -4,6 +4,10 @@ import 'dart:convert';
 import 'dart:async';
 // import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter_chat_bubble/bubble_type.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
+import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -52,7 +56,13 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(
+        child: Column(
+      children: [
+        ChatBubble(
+          clipper: ChatBubbleClipper1(type: BubbleType.sendBubble),
+          child: Text('sdfsdfdsfds'),
+        ),
+        Center(
             child: FutureBuilder(
                 future: this.fetchProfile(),
                 builder: (context, snapshot) {
@@ -83,6 +93,8 @@ class _ProfileState extends State<Profile> {
                       ]);
                     }
                   }
-                })));
+                })),
+      ],
+    ));
   }
 }

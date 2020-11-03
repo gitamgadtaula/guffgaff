@@ -128,6 +128,7 @@ class _ChatState extends State<Chat> {
                       children: [
                         Flexible(
                           child: ChatBubble(
+                            alignment: Alignment.topRight,
                             backGroundColor: Colors.redAccent,
                             clipper:
                                 ChatBubbleClipper1(type: BubbleType.sendBubble),

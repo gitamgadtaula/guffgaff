@@ -26,6 +26,7 @@ dependencies:
   http: ^0.12.2
   shared_preferences: ^0.5.12+2
   image_picker: ^0.6.7+12
+  flutter_chat_bubble: ^1.0.2
   # firebase_core:
   # firebase_auth:
   # cloud_firestore:
