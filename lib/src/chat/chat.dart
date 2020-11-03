@@ -3,6 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter_chat_bubble/bubble_type.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
+import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 
 class Chat extends StatefulWidget {
   final String username;
@@ -110,21 +114,43 @@ class _ChatState extends State<Chat> {
             } else {
               var item = snapshot.data['messages'];
               return ListView.builder(
+                padding: EdgeInsets.only(bottom: 80),
                 reverse: true,
                 itemCount: item.length,
                 itemBuilder: (context, index) {
                   var name =
                       (item[index]['full_name']).split(' ')[0].toUpperCase();
                   print(index);
-                  return ListTile(
-                    leading: CircleAvatar(
-                        child: widget.userId == item[index]['sender']
-                            ? Text(name[0])
-                            : Text('Me')),
-                    title: Text(item[index]['username']),
-                    trailing: Text(item[index]['date'].split("T")[0]),
-                    subtitle: Text(item[index]['msg']),
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: ChatBubble(
+                            backGroundColor: Colors.redAccent,
+                            clipper:
+                                ChatBubbleClipper1(type: BubbleType.sendBubble),
+                            child: Text(item[index]['msg']),
+                          ),
+                        ),
+                        CircleAvatar(
+                            child: widget.userId == item[index]['sender']
+                                ? Text(name[0])
+                                : Text('Me'))
+                      ],
+                    ),
                   );
+                  // return ListTile(
+
+                  //   trailing: CircleAvatar(
+                  //       child: widget.userId == item[index]['sender']
+                  //           ? Text(name[0])
+                  //           : Text('Me')),
+                  //   // title: Text(item[index]['username']),
+                  //   // trailing: Text(item[index]['date'].split("T")[0]),
+                  //   subtitle: Text(item[index]['msg']),
+                  // );
                 },
               );
             }
