@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
-import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
+// import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_7.dart';
+import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_5.dart';
 
 class Chat extends StatefulWidget {
   final String username;
@@ -118,40 +119,53 @@ class _ChatState extends State<Chat> {
                 reverse: true,
                 itemCount: item.length,
                 itemBuilder: (context, index) {
-                  var name =
-                      (item[index]['full_name']).split(' ')[0].toUpperCase();
+                  // var name =
+                  //     (item[index]['full_name']).split(' ')[0].toUpperCase();
                   print(index);
                   return Container(
-                    margin: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: ChatBubble(
-                            alignment: Alignment.topRight,
-                            backGroundColor: Colors.redAccent,
-                            clipper:
-                                ChatBubbleClipper1(type: BubbleType.sendBubble),
-                            child: Text(item[index]['msg']),
-                          ),
-                        ),
-                        CircleAvatar(
-                            child: widget.userId == item[index]['sender']
-                                ? Text(name[0])
-                                : Text('Me'))
-                      ],
-                    ),
-                  );
-                  // return ListTile(
-
-                  //   trailing: CircleAvatar(
-                  //       child: widget.userId == item[index]['sender']
-                  //           ? Text(name[0])
-                  //           : Text('Me')),
-                  //   // title: Text(item[index]['username']),
-                  //   // trailing: Text(item[index]['date'].split("T")[0]),
-                  //   subtitle: Text(item[index]['msg']),
-                  // );
+                      margin: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.only(left: 4, right: 4),
+                      child: widget.userId == item[index]['sender']
+                          ?
+                          //if the message sent is by logged in user
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Flexible(
+                                  child: ChatBubble(
+                                    alignment: Alignment.topRight,
+                                    backGroundColor: Colors.grey,
+                                    clipper: ChatBubbleClipper5(
+                                        type: BubbleType.sendBubble),
+                                    child: Text(item[index]['msg']),
+                                  ),
+                                ),
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'http://guffgaffchat.herokuapp.com/users/${item[index]['image']}'),
+                                  // child:
+                                  //     widget.userId == item[index]['sender']
+                                  //         ? Text(name[0])
+                                  //         : Text('Me')
+                                )
+                              ],
+                            )
+                          :
+                          //else (if the message is received from another user)
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: ChatBubble(
+                                    alignment: Alignment.bottomLeft,
+                                    backGroundColor: Colors.blueAccent,
+                                    clipper: ChatBubbleClipper5(
+                                        type: BubbleType.receiverBubble),
+                                    child: Text(item[index]['msg']),
+                                  ),
+                                ),
+                              ],
+                            ));
                 },
               );
             }
